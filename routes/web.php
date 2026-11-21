@@ -4,6 +4,7 @@ use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\GarageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RentalController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::post('/garages', [GarageController::class, 'store'])->name('garages.store');
     Route::get('/extensions', [ExtensionController::class, 'index'])->name('extensions.index');
     Route::post('/extensions/{rental}', [ExtensionController::class, 'store'])->name('extensions.store');
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 });
 
 // Halaman penyewa: harus login, role-nya tenant, dan sudah disetujui admin
