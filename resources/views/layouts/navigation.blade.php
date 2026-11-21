@@ -10,7 +10,7 @@
                     </a>
                 </div>
 
-                                <!-- Navigation Links -->
+                                                <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
@@ -23,18 +23,18 @@
                         <x-nav-link :href="route('garages.index')" :active="request()->routeIs('garages.*')">
                             Garasi
                         </x-nav-link>
+                        <x-nav-link :href="route('extensions.index')" :active="request()->routeIs('extensions.*')">
+                            Perpanjang Sewa
+                        </x-nav-link>
+                        <x-nav-link :href="route('reports.index')" :active="request()->routeIs('reports.*')">
+                            Laporan
+                        </x-nav-link>
                     @elseif (Auth::user()->status === 'approved')
                         <x-nav-link :href="route('vehicles.index')" :active="request()->routeIs('vehicles.*')">
                             Kendaraan Saya
                         </x-nav-link>
-                         <x-nav-link :href="route('rent.create')" :active="request()->routeIs('rent.*')">
+                        <x-nav-link :href="route('rent.create')" :active="request()->routeIs('rent.*')">
                             Sewa Garasi
-                        </x-nav-link>
-                        <x-nav-link :href="route('extensions.index')" :active="request()->routeIs('extensions.*')">
-                            Perpanjang Sewa
-                        </x-nav-link>
-                         <x-nav-link :href="route('reports.index')" :active="request()->routeIs('reports.*')">
-                            Laporan
                         </x-nav-link>
                     @endif
                 </div>
@@ -55,10 +55,6 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -101,10 +97,6 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
