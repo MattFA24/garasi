@@ -22,4 +22,15 @@ class Garage extends Model
     {
         return $this->hasMany(Rental::class);
     }
+
+    /**
+     * Membuat kode garasi dari tipe dan nomor urut.
+     * Contoh: makeCode('car', 10) menghasilkan "C010".
+     */
+    public static function makeCode(string $type, int $number): string
+    {
+        $letters = ['bike' => 'S', 'car' => 'C', 'electric' => 'E'];
+
+        return $letters[$type].str_pad((string) $number, 3, '0', STR_PAD_LEFT);
+    }
 }

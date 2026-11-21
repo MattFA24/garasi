@@ -10,13 +10,21 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+                                <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    @if (Auth::user()->isAdmin())
+                        <x-nav-link :href="route('tenants.index')" :active="request()->routeIs('tenants.*')">
+                            Verifikasi Penyewa
+                        </x-nav-link>
+                        <x-nav-link :href="route('garages.index')" :active="request()->routeIs('garages.*')">
+                            Garasi
+                        </x-nav-link>
+                    @endif
                 </div>
-            </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">

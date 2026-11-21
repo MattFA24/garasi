@@ -31,13 +31,19 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'nik' => ['required', 'digits:16', 'unique:users,nik'],
+            'name' => ['required', 'string', 'max:100'],
+            'phone' => ['required', 'string', 'max:20'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        // role dan status tidak diambil dari form.
+        // Otomatis 'tenant' dan 'pending' dari nilai default di database.
         $user = User::create([
+            'nik' => $request->nik,
             'name' => $request->name,
+            'phone' => $request->phone,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
