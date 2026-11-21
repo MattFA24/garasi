@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\GarageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RentalController;
@@ -29,6 +30,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
     Route::get('/garages', [GarageController::class, 'index'])->name('garages.index');
     Route::post('/garages', [GarageController::class, 'store'])->name('garages.store');
+    Route::get('/extensions', [ExtensionController::class, 'index'])->name('extensions.index');
+    Route::post('/extensions/{rental}', [ExtensionController::class, 'store'])->name('extensions.store');
 });
 
 // Halaman penyewa: harus login, role-nya tenant, dan sudah disetujui admin

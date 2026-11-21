@@ -30,6 +30,9 @@
                          <x-nav-link :href="route('rent.create')" :active="request()->routeIs('rent.*')">
                             Sewa Garasi
                         </x-nav-link>
+                        <x-nav-link :href="route('extensions.index')" :active="request()->routeIs('extensions.*')">
+                            Perpanjang Sewa
+                        </x-nav-link>
                     @endif
                 </div>
 
