@@ -28,7 +28,10 @@ class GarageController extends Controller
             'type' => ['required', 'in:bike,car,electric'],
             'quantity' => ['required', 'integer', 'min:1', 'max:999'],
             'daily_price' => ['required', 'integer', 'min:1'],
-            'price_per_kwh' => ['required_if:type,electric', 'nullable', 'integer', 'min:1'],
+            'price_per_kwh' => ['required_if:type,electric', 'prohibited_unless:type,electric', 'nullable', 'integer', 'min:1'],
+        ], [
+            'price_per_kwh.required_if' => 'Harga per kWh wajib diisi untuk garasi mobil listrik.',
+            'price_per_kwh.prohibited_unless' => 'Harga per kWh hanya untuk garasi mobil listrik, kosongkan isian ini.',
         ]);
 
         // Nomor terakhir untuk tipe ini. Aman karena tidak ada fitur hapus garasi.

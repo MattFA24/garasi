@@ -21,24 +21,26 @@
             <div class="bg-white shadow-sm sm:rounded-lg p-6">
                 <h3 class="font-semibold text-lg mb-4">Tambah Kendaraan</h3>
 
-                <form method="POST" action="{{ route('vehicles.store') }}" class="space-y-4 max-w-md">
+                               <form method="POST" action="{{ route('vehicles.store') }}" class="space-y-4 max-w-md" x-data="{ type: @js(old('type', 'bicycle')) }">
                     @csrf
 
                     <div>
                         <x-input-label for="type" value="Jenis Kendaraan" />
-                        <select id="type" name="type" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">
+                        <select id="type" name="type" x-model="type" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">
                             @foreach ($typeLabels as $value => $label)
-                                <option value="{{ $value }}" @selected(old('type') === $value)>{{ $label }}</option>
+                                <option value="{{ $value }}">{{ $label }}</option>
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('type')" class="mt-2" />
                     </div>
 
-                    <div>
-                        <x-input-label for="plate_number" value="Nomor Plat (kosongkan untuk sepeda)" />
-                        <x-text-input id="plate_number" name="plate_number" type="text" class="block mt-1 w-full" :value="old('plate_number')" />
-                        <x-input-error :messages="$errors->get('plate_number')" class="mt-2" />
-                    </div>
+                    <template x-if="type !== 'bicycle'">
+                        <div>
+                            <x-input-label for="plate_number" value="Nomor Plat" />
+                            <x-text-input id="plate_number" name="plate_number" type="text" class="block mt-1 w-full" :value="old('plate_number')" />
+                            <x-input-error :messages="$errors->get('plate_number')" class="mt-2" />
+                        </div>
+                    </template>
 
                     <div>
                         <x-input-label for="brand" value="Merek" />
@@ -52,11 +54,13 @@
                         <x-input-error :messages="$errors->get('model')" class="mt-2" />
                     </div>
 
-                    <div>
-                        <x-input-label for="battery_capacity_kwh" value="Kapasitas Baterai (kWh, khusus mobil listrik)" />
-                        <x-text-input id="battery_capacity_kwh" name="battery_capacity_kwh" type="number" step="0.1" min="1" class="block mt-1 w-full" :value="old('battery_capacity_kwh')" />
-                        <x-input-error :messages="$errors->get('battery_capacity_kwh')" class="mt-2" />
-                    </div>
+                    <template x-if="type === 'electric_car'">
+                        <div>
+                            <x-input-label for="battery_capacity_kwh" value="Kapasitas Baterai (kWh)" />
+                            <x-text-input id="battery_capacity_kwh" name="battery_capacity_kwh" type="number" step="0.1" min="1" class="block mt-1 w-full" :value="old('battery_capacity_kwh')" />
+                            <x-input-error :messages="$errors->get('battery_capacity_kwh')" class="mt-2" />
+                        </div>
+                    </template>
 
                     <x-primary-button>Simpan</x-primary-button>
                 </form>

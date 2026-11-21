@@ -16,14 +16,14 @@
             <div class="bg-white shadow-sm sm:rounded-lg p-6">
                 <h3 class="font-semibold text-lg mb-4">Buat Garasi Baru</h3>
 
-                <form method="POST" action="{{ route('garages.store') }}" class="space-y-4 max-w-md">
+                                <form method="POST" action="{{ route('garages.store') }}" class="space-y-4 max-w-md" x-data="{ type: @js(old('type', 'bike')) }">
                     @csrf
 
                     <div>
                         <x-input-label for="type" value="Tipe Garasi" />
-                        <select id="type" name="type" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">
+                        <select id="type" name="type" x-model="type" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">
                             @foreach ($typeLabels as $value => $label)
-                                <option value="{{ $value }}" @selected(old('type') === $value)>{{ $label }}</option>
+                                <option value="{{ $value }}">{{ $label }}</option>
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('type')" class="mt-2" />
@@ -41,11 +41,13 @@
                         <x-input-error :messages="$errors->get('daily_price')" class="mt-2" />
                     </div>
 
-                    <div>
-                        <x-input-label for="price_per_kwh" value="Harga Isi Listrik per kWh (Rp, khusus garasi mobil listrik)" />
-                        <x-text-input id="price_per_kwh" name="price_per_kwh" type="number" min="1" class="block mt-1 w-full" :value="old('price_per_kwh')" />
-                        <x-input-error :messages="$errors->get('price_per_kwh')" class="mt-2" />
-                    </div>
+                    <template x-if="type === 'electric'">
+                        <div>
+                            <x-input-label for="price_per_kwh" value="Harga Isi Listrik per kWh (Rp)" />
+                            <x-text-input id="price_per_kwh" name="price_per_kwh" type="number" min="1" class="block mt-1 w-full" :value="old('price_per_kwh')" />
+                            <x-input-error :messages="$errors->get('price_per_kwh')" class="mt-2" />
+                        </div>
+                    </template>
 
                     <x-primary-button>Simpan</x-primary-button>
                 </form>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 class Garage extends Model
 {
@@ -32,5 +33,17 @@ class Garage extends Model
         $letters = ['bike' => 'S', 'car' => 'C', 'electric' => 'E'];
 
         return $letters[$type].str_pad((string) $number, 3, '0', STR_PAD_LEFT);
+    }
+
+    /**
+     * Cek garasi kosong di rentang tanggal ini (BR-08).
+     * Dua rentang tanggal bertabrakan kalau mulaiA <= selesaiB dan mulaiB <= selesaiA.
+     */
+    public function isFreeBetween(Carbon $start, Carbon $end): bool
+    {
+        return ! $this->rentals()
+            ->where('start_date', '<=', $end->toDateString())
+            ->where('end_date', '>=', $start->toDateString())
+            ->exists();
     }
 }

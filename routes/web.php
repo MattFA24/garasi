@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\GarageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RentalController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 Route::middleware(['auth', 'role:tenant', 'approved'])->group(function () {
     Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
     Route::post('/vehicles', [VehicleController::class, 'store'])->name('vehicles.store');
+    Route::get('/rent', [RentalController::class, 'create'])->name('rent.create');
+    Route::post('/rent', [RentalController::class, 'store'])->name('rent.store');
 });
 
 require __DIR__.'/auth.php';

@@ -32,4 +32,16 @@ class Vehicle extends Model
     {
         return $this->hasMany(Rental::class);
     }
+
+    /**
+     * Tipe garasi yang boleh dipakai kendaraan ini (BR-01).
+     */
+    public function allowedGarageTypes(): array
+    {
+        return match ($this->type) {
+            'bicycle', 'motorcycle' => ['bike'],
+            'car' => ['car'],
+            'electric_car' => ['car', 'electric'],
+        };
+    }
 }
