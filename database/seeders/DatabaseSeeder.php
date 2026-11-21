@@ -10,7 +10,7 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Membuat akun admin. Admin tidak bisa daftar lewat form,
-     * jadi akunnya dibuat lewat seeder. 
+     * jadi akunnya dibuat lewat seeder.
      */
     public function run(): void
     {
