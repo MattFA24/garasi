@@ -3,6 +3,7 @@
 use App\Http\Controllers\GarageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TenantController;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,6 +28,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
     Route::get('/garages', [GarageController::class, 'index'])->name('garages.index');
     Route::post('/garages', [GarageController::class, 'store'])->name('garages.store');
+});
+
+// Halaman penyewa: harus login, role-nya tenant, dan sudah disetujui admin
+Route::middleware(['auth', 'role:tenant', 'approved'])->group(function () {
+    Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
+    Route::post('/vehicles', [VehicleController::class, 'store'])->name('vehicles.store');
 });
 
 require __DIR__.'/auth.php';

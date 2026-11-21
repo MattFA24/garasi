@@ -23,6 +23,10 @@
                         <x-nav-link :href="route('garages.index')" :active="request()->routeIs('garages.*')">
                             Garasi
                         </x-nav-link>
+                    @elseif (Auth::user()->status === 'approved')
+                        <x-nav-link :href="route('vehicles.index')" :active="request()->routeIs('vehicles.*')">
+                            Kendaraan Saya
+                        </x-nav-link>
                     @endif
                 </div>
 
