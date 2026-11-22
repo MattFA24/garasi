@@ -18,7 +18,7 @@ Dibuat untuk Uji Kompetensi Pemrogram (LSP) oleh Matthew Fernando Anggrian.
 
 ## Teknologi
 
-Laravel 12, PHP 8.2+, MySQL, Blade dan Tailwind (Laravel Breeze), Alpine.js, PHPUnit.
+Laravel 12, PHP 8.4 atau lebih baru, MySQL, Blade dan Tailwind (Laravel Breeze), Alpine.js, PHPUnit.
 
 ## Cara menjalankan
 
@@ -48,7 +48,7 @@ php artisan test
 | File | Isi |
 |---|---|
 | `app/Services/RentalCalculator.php` | Semua rumus tanggal dan biaya sewa |
-| `tests/Unit/RentalCalculatorTest.php` | Unit test T01 sampai T14 |
+| `tests/Unit/RentalCalculatorTest.php` | Unit test T01 sampai T16 |
 | `app/Http/Controllers/RentalController.php` | Sewa garasi baru dengan transaksi dan `lockForUpdate` |
 | `app/Http/Controllers/ExtensionController.php` | Perpanjangan sewa oleh admin |
 | `app/Http/Controllers/ReportController.php` | Laporan sewa |
