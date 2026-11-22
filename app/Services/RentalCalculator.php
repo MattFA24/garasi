@@ -50,12 +50,12 @@ class RentalCalculator
     /**
      * Biaya isi listrik sampai penuh (BR-07).
      *
-     * @throws InvalidArgumentException kalau sisa baterai lebih besar dari kapasitas
+     * @throws InvalidArgumentException kalau sisa baterai negatif atau lebih besar dari kapasitas
      */
     public function chargingCost(float $capacity, float $remaining, int $pricePerKwh): int
     {
-        if ($remaining > $capacity) {
-            throw new InvalidArgumentException('Sisa baterai tidak boleh lebih dari kapasitas.');
+        if ($remaining < 0 || $remaining > $capacity) {
+            throw new InvalidArgumentException('Sisa baterai harus antara 0 dan kapasitas.');
         }
 
         return (int) round(($capacity - $remaining) * $pricePerKwh);
@@ -64,9 +64,15 @@ class RentalCalculator
     /**
      * Biaya perpanjangan untuk hari tambahan (BR-10).
      * Setiap 1 bulan penuh = 25 x harga harian, sisanya dihitung harian.
+     *
+     * @throws InvalidArgumentException kalau tanggal selesai baru tidak setelah tanggal selesai lama
      */
     public function extensionCost(int $dailyPrice, Carbon $oldEnd, Carbon $newEnd): int
     {
+        if ($newEnd->lte($oldEnd)) {
+            throw new InvalidArgumentException('Tanggal selesai baru harus setelah tanggal selesai lama.');
+        }
+
         $cost = 0;
         $cursor = $oldEnd->copy()->addDay();
 

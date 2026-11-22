@@ -119,4 +119,20 @@ class RentalCalculatorTest extends TestCase
     {
         $this->assertSame('C010', Garage::makeCode('car', 10));
     }
+
+    /** T15: sisa baterai negatif harus ditolak. */
+    public function test_sisa_baterai_negatif_ditolak(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $this->calculator->chargingCost(60, -5, 2500);
+    }
+
+    /** T16: perpanjang ke tanggal yang sama dengan tanggal selesai lama harus ditolak. */
+    public function test_perpanjang_ke_tanggal_lama_ditolak(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $this->calculator->extensionCost(20000, Carbon::parse('2026-11-26'), Carbon::parse('2026-11-26'));
+    }
 }
